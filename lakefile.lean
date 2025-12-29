@@ -5,11 +5,10 @@ open System (FilePath)
 package assimptor where
   version := v!"0.1.0"
 
--- Assimp link arguments (vendored build)
+-- Assimp link arguments (system assimp from Homebrew)
 def assimpLinkArgs : Array String := #[
   "-L/opt/homebrew/lib",
   "-L/usr/local/lib",
-  "-Lassimp/build/lib",
   "-lassimp",
   "-lz",
   "-lc++"
@@ -21,16 +20,15 @@ lean_lib Assimptor where
   moreLinkArgs := assimpLinkArgs
 
 -- Assimp loader (C++ code for 3D model loading)
+-- Uses system assimp from Homebrew: brew install assimp
 target assimp_loader_o pkg : FilePath := do
   let oFile := pkg.buildDir / "native" / "assimp_loader.o"
   let srcFile := pkg.dir / "native" / "src" / "common" / "assimp_loader.cpp"
   let includeDir := pkg.dir / "native" / "include"
-  let assimpIncludeDir := pkg.dir / "assimp" / "include"
-  let assimpBuildIncludeDir := pkg.dir / "assimp" / "build" / "include"
   buildO oFile (← inputTextFile srcFile) #[
     "-I", includeDir.toString,
-    "-I", assimpIncludeDir.toString,
-    "-I", assimpBuildIncludeDir.toString,
+    "-I/opt/homebrew/include",  -- Apple Silicon Homebrew
+    "-I/usr/local/include",      -- Intel Homebrew fallback
     "-std=c++17",
     "-fPIC",
     "-O2"

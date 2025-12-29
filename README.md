@@ -15,7 +15,10 @@ buffers plus submesh and texture metadata, ready for rendering in Afferent.
 ## Requirements
 
 - macOS with clang available (for the Assimp C++ loader)
-- CMake (for building Assimp)
+- Assimp library installed via Homebrew:
+  ```bash
+  brew install assimp
+  ```
 
 ## Building
 
@@ -23,8 +26,10 @@ buffers plus submesh and texture metadata, ready for rendering in Afferent.
 ./build.sh
 ```
 
-This script builds the Assimp submodule (if needed) and then builds the
-Lean modules and native bridge.
+Or directly with lake:
+```bash
+LEAN_CC=/usr/bin/clang lake build
+```
 
 ## Usage
 
