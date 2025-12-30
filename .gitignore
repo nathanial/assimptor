@@ -2,3 +2,4 @@
 .lake/
 /build/
 assimp/build/
+lake-manifest.json
