@@ -1,5 +1,5 @@
 .DS_Store
-.lake/
 /build/
 assimp/build/
+.lake
 lake-manifest.json
